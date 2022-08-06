@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import { Toaster } from "react-hot-toast";
 import { UserProvider } from "../UserProvider";
 import { NhostNextProvider, NhostClient } from "@nhost/nextjs";
+import { MantineProvider } from "@mantine/core";
 
 const nhost = new NhostClient({
   subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN || "",
@@ -12,7 +13,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <NhostNextProvider nhost={nhost} initial={pageProps.nhostSession}>
       <UserProvider>
-        <Component {...pageProps} />
+        <MantineProvider withGlobalStyles withNormalizeCSS>
+          <Component {...pageProps} />
+        </MantineProvider>
         <Toaster />
       </UserProvider>
     </NhostNextProvider>
